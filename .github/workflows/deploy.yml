@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# 設定 GitHub Pages 部署所需的 GITHUB_TOKEN 權限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 允許同一時間只有一個部署作業進行，避免衝突
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 檢出程式碼 (Checkout repository)
+        uses: actions/checkout@v4
+
+      - name: 安裝 Node.js 環境 (Setup Node.js 22)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: 安裝專案相依套件 (Install dependencies)
+        run: npm ci
+
+      - name: 執行型別檢查 (TypeScript Lint)
+        run: npm run lint
+
+      - name: 打包靜態網站 (Build client for Pages)
+        run: npm run build:client
+        env:
+          VITE_BASE_PATH: './'
+
+      - name: 配置 GitHub Pages (Configure Pages)
+        uses: actions/configure-pages@v5
+
+      - name: 上傳打包產物 (Upload Pages Artifact)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: 部署上線至 GitHub Pages (Deploy to GitHub Pages)
+        id: deployment
+        uses: actions/deploy-pages@v4
