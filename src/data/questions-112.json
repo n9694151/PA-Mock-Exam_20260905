@@ -1,0 +1,90 @@
+[
+  {
+    "id": "112-patent-law-001",
+    "year": 112,
+    "subjectId": "patent-law",
+    "subjectName": "專利法規",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "依中華民國專利法第24條規定，下列何者「不得」取得發明專利？",
+    "options": {
+      "A": "製造人類疾病治療藥物之化學合成方法",
+      "B": "人類或動物疾病之診斷、治療或外科手術方法",
+      "C": "用於動物疾病診斷之高精密醫療器材裝置",
+      "D": "利用重組DNA技術產製之特定蛋白質發明"
+    },
+    "officialAnswer": "B",
+    "explanation": "依專利法第24條法定不予專利項目規定：下列各款，不予發明專利：一、動、植物及生產動、植物之主要生物學方法。但微生物學之生產方法，不在此限。二、人類或動物疾病之診斷、治療或外科手術方法。三、妨害公共秩序或善良風俗者。醫療器具裝置及藥物本身非診斷治療方法，得予專利。故 B 為法定不予發明專利項目。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 112,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "法定不予專利之標的"
+  },
+  {
+    "id": "112-patent-admin-remedy-001",
+    "year": 112,
+    "subjectId": "patent-admin-remedy",
+    "subjectName": "專利行政與救濟法規",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "依智慧財產案件審理法及專利法規定，專利舉發案經審決後，舉發人對審定不服提起行政訴訟時，其第一審管轄法院為下列何者？",
+    "options": {
+      "A": "原處分機關所在地之地方法院行政訴訟庭",
+      "B": "智慧財產及商業法院",
+      "C": "最高行政法院",
+      "D": "台北高等行政法院普通庭"
+    },
+    "officialAnswer": "B",
+    "explanation": "依智慧財產案件審理法規定，依專利法所保護之智慧財產權益所生之第一審行政訴訟，專屬智慧財產及商業法院管轄。故正確答案為 B。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 112,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "智財法院訴訟管轄"
+  },
+  {
+    "id": "112-engineering-mechanics-001",
+    "year": 112,
+    "subjectId": "engineering-mechanics",
+    "subjectName": "工程力學",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "一懸臂樑（cantilever beam）長度為 L，自由端承受一向下之垂直集中荷重 P，則固定端處所承受之最大彎矩（bending moment）量值為何？",
+    "options": {
+      "A": "P * L / 2",
+      "B": "P * L",
+      "C": "P * L^2 / 2",
+      "D": "2 * P * L"
+    },
+    "officialAnswer": "B",
+    "explanation": "依材料力學梁之受力分析，懸臂樑自由端承受集中載重 P，剪力在全樑長均為 P，固定端距作用點距離為 L，故固定端之彎矩 M = P * L。故 B 正確。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 112,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "梁彎矩與剪力分析"
+  },
+  {
+    "id": "112-patent-agent-practice-001",
+    "year": 112,
+    "subjectId": "patent-agent-practice",
+    "subjectName": "專利代理實務",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "專利代理人在代理申請人就發明專利進行答辯審查意見通知函（Office Action）時，下列何種策略不得單獨作為消除新穎性核駁之理由？",
+    "options": {
+      "A": "具體指明引證案欠缺本案申請專利範圍中不可或缺之特定技術特徵",
+      "B": "將說明書中原已充分揭露之有利附屬項技術特徵併入獨立項予以減縮限定",
+      "C": "僅單純強調本案商業銷售成果極佳而未對引證文件中之技術構成作任何比對反駁",
+      "D": "證明引證案在申請日之前並未公開，不符合先前技術之定義"
+    },
+    "officialAnswer": "C",
+    "explanation": "新穎性判斷為技術構成之客觀同一性比對。若引證案已揭露請求項全部特徵，單純之商業成功可能為輔助判斷「進步性」之佐證，但絕對無法直接作為克服「新穎性」核駁之理由。故 C 為不可行之答辯方式。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 112,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "審查意見申復與答辯策略"
+  }
+]

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "115-patent-law-001",
+    "year": 115,
+    "subjectId": "patent-law",
+    "subjectName": "專利法規",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "依專利法第34條之規定，申請人申請發明專利後，得於下列何時申請將原案分割為二個以上之獨立專利申請案？",
+    "options": {
+      "A": "原申請案核准審定書送達後之任何時間均可無限期提出",
+      "B": "原申請案再審查審定前，或初審核准審定書送達之次日起三個月內",
+      "C": "僅限於提出申請案之日起30日內",
+      "D": "僅限於智慧財產局發出第一次審查意見通知書之當日"
+    },
+    "officialAnswer": "B",
+    "explanation": "依專利法第34條第2項規定，發明專利分割申請應於下列各款之期間內為之：一、原申請案再審查審定前。二、原申請案核准審定書、再審查核准審定書送達之次日起三個月內（核准後分割限於初審或再審核准後法定期間內）。故 B 正確。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 115,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "專利申請案分割程序"
+  },
+  {
+    "id": "115-professional-english-001",
+    "year": 115,
+    "subjectId": "professional-english",
+    "subjectName": "專業英文",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "Which of the following legal concepts best matches the definition: 'A doctrine that prevents a patentee from reclaiming through the doctrine of equivalents subject matter surrendered during patent prosecution'?",
+    "options": {
+      "A": "Exhaustion of Rights",
+      "B": "Prosecution History Estoppel (File Wrapper Estoppel)",
+      "C": "Inequitable Conduct",
+      "D": "Intervening Rights"
+    },
+    "officialAnswer": "B",
+    "explanation": "Prosecution History Estoppel（申請歷史禁反言 / 檔案禁反言）prevents an inventor from using the doctrine of equivalents to recapture scope that was surrendered (narrowed or argued away) to overcome patent office rejections during prosecution. Thus, B is correct.",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 115,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "國際專利法理詞彙"
+  },
+  {
+    "id": "115-engineering-mechanics-001",
+    "year": 115,
+    "subjectId": "engineering-mechanics",
+    "subjectName": "工程力學",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "在線性彈性力學中，材料在單軸向拉伸應力 σ 下，若楊氏模數為 E，蒲松比（Poisson's ratio）為 ν，則橫向應變（lateral strain）ε_lat 應如何表示？",
+    "options": {
+      "A": "ε_lat = -ν * (σ / E)",
+      "B": "ε_lat = ν * (σ * E)",
+      "C": "ε_lat = - (σ / (ν * E))",
+      "D": "ε_lat = (1 + ν) * (σ / E)"
+    },
+    "officialAnswer": "A",
+    "explanation": "依胡克定律（Hooke's Law），單軸拉伸縱向應變 ε_long = σ / E。蒲松比定義為 ν = - ε_lat / ε_long，因此橫向應變 ε_lat = - ν * ε_long = - ν * (σ / E)。負號表示縱向拉長時橫向收縮。故 A 正確。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 115,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "材料力學胡克定律與蒲松比"
+  }
+]

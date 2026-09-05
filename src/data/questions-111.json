@@ -1,0 +1,90 @@
+[
+  {
+    "id": "111-patent-law-001",
+    "year": 111,
+    "subjectId": "patent-law",
+    "subjectName": "專利法規",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "依專利法第52條規定，發明專利權自下列何日起算產生專利權效力？其專利權期限為何？",
+    "options": {
+      "A": "自申請日起算，期限為15年",
+      "B": "自審查核准日起算，期限為20年",
+      "C": "自公告之日起發生專利權之效力，其期限自申請日起算20年屆滿",
+      "D": "自公開之日起發生專利權效力，期限自公開日起算10年屆滿"
+    },
+    "officialAnswer": "C",
+    "explanation": "依專利法第52條第1項及第3項規定：「發明專利權自公告之日起發生專利權之效力，其專利權期限，自申請日起算二十年屆滿。」（新型專利權期限為自申請日起算十年；設計專利權期限自申請日起算十五年）。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 111,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "專利權效力與專利期間"
+  },
+  {
+    "id": "111-patent-law-002",
+    "year": 111,
+    "subjectId": "patent-law",
+    "subjectName": "專利法規",
+    "questionNumber": 2,
+    "questionType": "multiple-choice",
+    "question": "依專利法規定，專利權人得向專利專責機關申請更正專利說明書、申請專利範圍或圖式，下列何者不屬於法定准予更正之事由？",
+    "options": {
+      "A": "請求項之刪除",
+      "B": "申請專利範圍之減縮",
+      "C": "引進申請時說明書或圖式未揭露之新技術手段以擴大保護範圍",
+      "D": "誤記或不明瞭記載之釋明"
+    },
+    "officialAnswer": "C",
+    "explanation": "依專利法第67條第1項規定，更正僅得就下列事項為之：一、請求項之刪除。二、申請專利範圍之減縮。三、誤記或不明瞭記載之釋明。四、錯誤翻譯之訂正。且依同條第2項，更正不得超出申請時說明書、申請專利範圍或圖式所揭露之範圍，亦不得實質擴大或變更申請專利範圍。故 C 違反規定。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 111,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "專利說明書更正程序"
+  },
+  {
+    "id": "111-patent-examination-practice-001",
+    "year": 111,
+    "subjectId": "patent-examination-practice",
+    "subjectName": "專利審查基準與實務",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "依專利審查基準關於「擬制喪失新穎性」之審查規定，下列要件何者正確？",
+    "options": {
+      "A": "先申請案之申請日與後申請案之申請日同一天時，後申請案即擬制喪失新穎性",
+      "B": "先申請案須先於後申請案申請，而在後申請案申請日之後始公開或公告，且兩案申請人及發明人須完全不同",
+      "C": "只要兩案發明人同一，不論先案何時公開均構成擬制喪失新穎性",
+      "D": "擬制喪失新穎性亦適用於審查後申請案之「進步性」"
+    },
+    "officialAnswer": "B",
+    "explanation": "依專利法第23條規定，申請專利之發明，與申請在先而在其申請後始公開或公告之發明或新型專利申請案所附說明書、申請專利範圍或圖式載明之內容相同者，不得取得發明專利。但其申請人與先申請案之申請人或發明人同一者，不在此限。此外，專利法第23條（擬制喪失新穎性）僅可用於核駁新穎性，不得作為核駁進步性之引證！故 B 正確。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 111,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "擬制喪失新穎性"
+  },
+  {
+    "id": "111-physics-chemistry-001",
+    "year": 111,
+    "subjectId": "physics-chemistry",
+    "subjectName": "普通物理與普通化學",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "在熱力學系統中，當系統進行可逆「絕熱膨脹（adiabatic expansion）」時，下列何項敘述正確？",
+    "options": {
+      "A": "系統對外作功，內能增加，溫度上升",
+      "B": "系統與外界無熱量交換（Q = 0），系統對外作功，內能減少，溫度下降",
+      "C": "系統溫度保持不變（ΔT = 0）",
+      "D": "系統熵（Entropy）必然大幅增加"
+    },
+    "officialAnswer": "B",
+    "explanation": "絕熱過程定義為系統與外界無熱交換，即 Q = 0。由熱力學第一定律 ΔU = Q - W，可得 ΔU = -W。當系統膨脹時對外作功 W > 0，因此內能變量 ΔU < 0（內能降低），對於理想氣體而言內能降低意味著溫度下降。可逆絕熱過程為等熵過程（ΔS = 0）。故 B 正確。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 111,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "熱力學第一定律與絕熱過程"
+  }
+]

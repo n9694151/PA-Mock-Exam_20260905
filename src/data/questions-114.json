@@ -1,0 +1,68 @@
+[
+  {
+    "id": "114-patent-law-001",
+    "year": 114,
+    "subjectId": "patent-law",
+    "subjectName": "專利法規",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "依專利法第59條專利權效力所不及之情事，下列何種行為構成專利權侵害？",
+    "options": {
+      "A": "非出於商業目的之未公開個人私權行為",
+      "B": "專利權人製造或經其同意製造之專利物販賣後，使用或再販賣該物者（權利耗盡原則）",
+      "C": "未經專利權人同意，於國內製造標的物並宣傳展示意圖進行大規模商業銷售",
+      "D": "為取得我國藥事法所定藥物許可證而進行之必要試驗及其附隨行為（Bolar 例外）"
+    },
+    "officialAnswer": "C",
+    "explanation": "依專利法第58條專利權排他範圍及第59條專利權效力所不及規定：個人非商業目的行為、Bolar藥事試驗豁免、國內第一次合法販賣後之權利耗盡等，均為專利權效力不及之法定抗辯事由。若未經同意在國內製造並意圖商業販賣，顯屬直接專利侵權行為。故 C 構成侵害。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 114,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "專利權排他效力與限制"
+  },
+  {
+    "id": "114-patent-examination-practice-001",
+    "year": 114,
+    "subjectId": "patent-examination-practice",
+    "subjectName": "專利審查基準與實務",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "依專利審查基準規定，關於專利舉發程序中之「舉發聲明」與「舉發理由」，下列敘述何者正確？",
+    "options": {
+      "A": "舉發人得就專利案之個別請求項分別提起舉發",
+      "B": "專利專責機關於審理舉發案時，得超出舉發人所提舉發聲明之請求項範圍逕行撤銷全部專利",
+      "C": "舉發審查中專利權人提出之更正案，毋須通知舉發人陳述意見即可逕行核准",
+      "D": "舉發人一旦撤回舉發申請，主管機關依法絕對不得依職權繼續進行審查"
+    },
+    "officialAnswer": "A",
+    "explanation": "依專利法第71條及審查基準規定，舉發人得就特定請求項個別提起舉發（得為一部舉發）。專利專責機關審查原則上受舉發聲明範圍之拘束，不得逾越舉發聲明之請求項範圍審究。故 A 正確。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 114,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "專利舉發審查程序"
+  },
+  {
+    "id": "114-physics-chemistry-001",
+    "year": 114,
+    "subjectId": "physics-chemistry",
+    "subjectName": "普通物理與普通化學",
+    "questionNumber": 1,
+    "questionType": "multiple-choice",
+    "question": "在常溫常壓下，一化學反應之標準自由能變化 ΔG° 為負值（ΔG° < 0），則此反應在標準狀態下之特性為何？",
+    "options": {
+      "A": "反應為自發進行（spontaneous），且化學平衡常數 K > 1",
+      "B": "反應為非自發進行，且化學平衡常數 K < 1",
+      "C": "反應必定為吸熱反應（ΔH° > 0）",
+      "D": "反應速率必然非常快，瞬間即可達成平衡"
+    },
+    "officialAnswer": "A",
+    "explanation": "依熱力學自由能公式 ΔG° = -RT ln(K)。當 ΔG° < 0 時，ln(K) > 0，故平衡常數 K > 1，代表熱力學上為自發趨勢。注意熱力學自發性僅代表平衡傾向，與反應活化能所決定的動力學速率（快慢）無必然關係。故 A 正確。",
+    "source": "考選部公開資訊（Demo 示範格式）",
+    "sourceYear": 114,
+    "sourceUrl": "https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx?y=2024&e=113130",
+    "isDemo": true,
+    "categoryTag": "吉布斯自由能與化學平衡"
+  }
+]
