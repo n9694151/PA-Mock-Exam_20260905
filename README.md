@@ -5,11 +5,10 @@
 [![Vite](https://img.shields.io/badge/Vite-6.2.3-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4.0-06B6D4?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Express](https://img.shields.io/badge/Express-4.21.2-000000?style=flat&logo=express&logoColor=white)](https://expressjs.com/)
-[![Gemini AI](https://img.shields.io/badge/Google_Gemini-3.8_Flash-8E75B2?style=flat&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automated_Deploy-2088FF?style=flat&logo=githubactions&logoColor=white)](https://github.com/features/actions)
 
 > 中華民國專門職業及技術人員高等考試「專利師考試」歷屆試題全功能線上練習與全真模擬測驗平台。  
-> 收錄 111～115 年度專利法規、專利行政與救濟法規、普通物理與普通化學等關鍵考科。
+> 收錄 111～115 年度專利法規、專利行政與救濟法規、普通物理與普通化學等關鍵考科。全系統 100% 離線運作，無須任何 API Key。
 
 ---
 
@@ -43,8 +42,8 @@
    - 題目可隨時加入星號收藏，隨時調閱重點法條。
 4. **學習成效雷達統計**：
    - 自動統計練習總題數、平均正確率、科目強弱分析與作答時間分佈，輔助制定衝刺複習策略。
-5. **Gemini 3.8 Flash 智慧 AI 解析**：
-   - 針對爭議法條、複雜化學/物理計算題，提供嚴謹繁體中文法理依據、條號引用與解題盲點剖析。
+5. **官方標準答案對照與解析指引**：
+   - 隨選題目提供答題對照與官方正解法規指引，無須付費或配置外部金鑰。
 
 ---
 
@@ -56,8 +55,7 @@
 | **建置工具** | Vite 6 + @vitejs/plugin-react | 極速 HMR 與高度最佳化 Rollup 打包 |
 | **樣式設計** | Tailwind CSS v4 | 最新世代高效原子化 CSS 引擎 |
 | **圖示與動效** | Lucide React + Motion | 專業美觀之向量圖示與微互動體驗 |
-| **後端伺服器** | Node.js (22 LTS) + Express 4 | 負責靜態託管與 Gemini API 安全轉發代理 |
-| **AI 驅動** | `@google/genai` (Gemini 3.8 Flash) | 低延遲、高專業度之智慧試題解析模型 |
+| **後端伺服器** | Node.js (22 LTS) + Express 4 | 負責靜態託管與題目解析服務 |
 | **自動化部署** | GitHub Actions (Pages Workflow) | Push 即自動進行型別檢查、打包與無痛部署 |
 
 ---
@@ -109,15 +107,10 @@
 
 ---
 
-## 🔐 環境變數設定
-
-專案根目錄中的 `.env` 檔案受 `.gitignore` 保護，不會洩漏至版本庫：
+## 🔐 環境變數設定（可選）
+本專案為 100% 獨立運行架構，無須配置任何外部 AI API Key。如需自訂本機服務設定，可透過 `.env` 進行微調：
 
 ```ini
-# Gemini AI 金鑰（用於題目法規解析）
-# 可至 Google AI Studio (https://aistudio.google.com/) 免費申請
-GEMINI_API_KEY="AIzaSyYourGeminiApiKeyHere"
-
 # 伺服器監聽埠號（預設為 3000，雲端主機通常會自動注入 PORT 變數）
 PORT=3000
 
@@ -125,7 +118,7 @@ PORT=3000
 VITE_BASE_PATH="./"
 ```
 
-> **注意**：若未配置 `GEMINI_API_KEY`，系統仍可正常進行所有測驗、模擬考與瀏覽題庫，遇 AI 解析時會友善提示官方解答並引導至智慧財產局法規資料庫。
+> **安全說明**：本專案不含任何外部付費或個人 API 金鑰，完全離線安全，可安心公開部署。
 
 ---
 

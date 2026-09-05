@@ -2,5 +2,5 @@
   "name": "專利師歷屆試題寶典",
   "description": "111～115 年專利師考試歷屆試題線上練習平台，收錄專利法規、專利行政與救濟法規、普通物理與化學等七大科目線上測驗、題庫練習、錯題本與AI輔助解析。",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

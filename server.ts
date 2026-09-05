@@ -3,7 +3,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
-import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
 
@@ -25,8 +24,8 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Gemini AI explanation endpoint
-app.post("/api/gemini/explain", async (req, res) => {
+// Question explanation endpoint (100% offline, zero external API keys)
+app.post("/api/gemini/explain", (req, res) => {
   try {
     const { question, options, officialAnswer, userAnswer, subjectName, year } = req.body;
 
@@ -34,71 +33,38 @@ app.post("/api/gemini/explain", async (req, res) => {
       return res.status(400).json({ error: "缺少題目內容" });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.json({
-        explanation: `【系統提示】尚未配置 GEMINI_API_KEY。若需使用 Gemini AI 即時輔助解析，請於平台設定中提供 API 金鑰。\n\n針對此題：\n本題正確答案為【${officialAnswer || "見官方公告"}】。\n考生作答為【${userAnswer || "未作答"}】。\n\n建議考生查閱經濟部智慧財產局公布之最新專利法規條文與審查基準以核對詳解。`,
-        isFallback: true,
-      });
-    }
-
-    const ai = new GoogleGenAI({
-      apiKey,
-      httpOptions: {
-        headers: {
-          "User-Agent": "aistudio-build",
-        },
-      },
-    });
-
+    const isCorrect = userAnswer === officialAnswer;
     const optionsText = options
       ? Object.entries(options)
-          .map(([key, val]) => `(${key}) ${val}`)
+          .map(([key, val]) => `• (${key}) ${val}`)
           .join("\n")
-      : "（未提供選項）";
+      : "";
 
-    const prompt = `你是一位精通中華民國專門職業及技術人員高等考試「專利師考試」的權威專業輔導講師。
-請針對以下專利師歷屆試題提供精準、嚴謹的解析。
-
-【題目資訊】
+    const explanation = `【官方標準解答與解析指引】
 考試年度：民國 ${year || 113} 年
-科目名稱：${subjectName || "專利師專業科目"}
-題目內容：
+科目名稱：${subjectName || "專利師專業考科"}
+
+【作答對照】
+• 官方公布正確答案：【${officialAnswer || "見官方公告"}】
+• 考生目前選擇答案：【${userAnswer || "未作答"}】（${isCorrect ? "作答正確 ✅" : "作答錯誤 ❌"}）
+
+【試題內容】
 ${question}
 
-選項內容：
-${optionsText}
-
-官方公布答案：【${officialAnswer || "未指定"}】
-考生選擇之答案：【${userAnswer || "未選擇"}】
-
-【解析要求】
-1. 嚴格使用「繁體中文（台灣習慣用語，例如：專利權、舉發、優先權、更正、新型專利、發明專利、審定、訴願、行政訴訟等）」。
-2. 明確說明正確答案【${officialAnswer}】之所以正確之法理依據或法條規範（若為法律科目，請務必指出中華民國專利法、專利法施行細則、專利審查基準或行政程序法等切確條號；若為物理/化學/力學計算題，請詳細列出推導或計算過程）。
-3. 逐項分析其他選項（錯誤選項）之所以錯誤的原因或瑕疵點。
-4. 【嚴格規範】切勿捏造法條、條號或不存在的判決判例！若對特定條文或裁決不確定，請明確說明「請以最新公布之專利法規及智慧財產局解釋為準」。
-5. 解析最後請附上：重點提示與國考應試記憶小撇步。
-
-請依結構化格式條理分明地輸出解析。`;
-
-    const response = await ai.models.generateContent({
-      model: "gemini-3.8-flash",
-      contents: prompt,
-      config: {
-        systemInstruction: "你是專精於台灣專利師國考的法規與理工考題解析專家，回答客觀嚴謹、依據法條法理，絕不捏造條文。",
-        temperature: 0.2,
-      },
-    });
+${optionsText ? `【選項內容】\n${optionsText}\n` : ""}
+【法規與研讀指引】
+1. 本題標準解答以考選部公布之專利師考試官方正解為依據。
+2. 法律考科請查閱經濟部智慧財產局最新版《專利法》、《專利法施行細則》與《專利審查基準》對照條文。
+3. 理工科目（普通物理與普通化學、工程力學等）請著重基礎公式推導與題幹邊界條件分析。`;
 
     return res.json({
-      explanation: response.text || "AI 解析生成中，無文字回傳",
-      isFallback: false,
+      explanation,
+      isFallback: true,
     });
   } catch (error: any) {
-    console.error("Gemini API error:", error);
     return res.status(500).json({
-      error: error?.message || "AI 解析請求失敗",
-      explanation: "AI 服務暫時無法連線，請稍後再試，或逕行查閱官方公布之法規標準答案。",
+      error: error?.message || "解析服務暫時無法處理",
+      explanation: "解析服務暫時無法處理，請稍後再試。",
     });
   }
 });
