@@ -46,6 +46,8 @@ jobs:
 
       - name: 配置 GitHub Pages (Configure Pages)
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: 上傳打包產物 (Upload Pages Artifact)
         uses: actions/upload-pages-artifact@v3
