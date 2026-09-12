@@ -13,16 +13,27 @@ import {
   ArrowRight,
   Award,
   Zap,
+  Mail,
+  LogIn,
+  LogOut,
+  ShieldCheck,
+  CheckCircle,
 } from 'lucide-react';
 import { ALL_YEARS, CORE_SUBJECTS, OFFICIAL_MOEX_SEARCH_URL } from '../data/subjects';
 import { questionService } from '../services/questionService';
 import { storageService } from '../services/storageService';
+import { authService } from '../services/authService';
+import { UserProfile } from '../types';
 
 interface HomeProps {
   onStartQuiz: (options: { year: number | 'all'; subjectId: string | 'all' }) => void;
   onStartMockExam: (year: number, subjectId: string) => void;
   onOpenRandomModal: () => void;
   onNavigateTab: (tab: any) => void;
+  currentUser?: UserProfile | null;
+  onLogin?: (email: string) => void;
+  onLogout?: () => void;
+  onOpenLoginModal?: () => void;
 }
 
 export const Home: React.FC<HomeProps> = ({
@@ -30,9 +41,42 @@ export const Home: React.FC<HomeProps> = ({
   onStartMockExam,
   onOpenRandomModal,
   onNavigateTab,
+  currentUser = null,
+  onLogin = (_email: string) => {},
+  onLogout = () => {},
+  onOpenLoginModal = () => {},
 }) => {
   const [selectedYear, setSelectedYear] = useState<number | 'all'>(113);
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | 'all'>('patent-law');
+  const [homeEmailInput, setHomeEmailInput] = useState('');
+  const [emailInputError, setEmailInputError] = useState('');
+  const [loginSuccessMsg, setLoginSuccessMsg] = useState('');
+
+  const recentUsers = authService.getRecentUsers();
+
+  const handleHomeLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanEmail = homeEmailInput.trim().toLowerCase();
+    if (!cleanEmail) {
+      setEmailInputError('請輸入電子信箱');
+      return;
+    }
+    if (!authService.isValidEmail(cleanEmail)) {
+      setEmailInputError('請輸入正確的信箱格式（例如：exam@patent.tw）');
+      return;
+    }
+    try {
+      const profile = authService.login(cleanEmail);
+      storageService.migrateGuestDataToUser(profile.email);
+      setHomeEmailInput('');
+      setEmailInputError('');
+      setLoginSuccessMsg(`歡迎登入 ${profile.email}！已為您啟用錯題記錄。`);
+      onLogin(profile.email);
+      setTimeout(() => setLoginSuccessMsg(''), 4000);
+    } catch (err: any) {
+      setEmailInputError(err?.message || '登入發生錯誤');
+    }
+  };
 
   const allQuestions = questionService.getAllQuestions();
   const stats = storageService.getOverallStats(allQuestions);
@@ -119,6 +163,147 @@ export const Home: React.FC<HomeProps> = ({
         {/* Decorative background glow */}
         <div className="absolute right-0 bottom-0 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
       </div>
+
+      {/* Main Screen Email Login & Wrong Question Tracking Section */}
+      {loginSuccessMsg && (
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2.5 animate-in fade-in">
+          <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+          <span>{loginSuccessMsg}</span>
+        </div>
+      )}
+
+      {currentUser ? (
+        /* Logged-in Learner Status Card */
+        <div className="bg-linear-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-lg relative overflow-hidden">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="flex items-start sm:items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 text-amber-300 flex items-center justify-center font-bold text-xl shrink-0 shadow-inner">
+                {currentUser.email.slice(0, 1).toUpperCase()}
+              </div>
+              <div className="space-y-1.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-0.5 rounded-full">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    已啟用錯題自動紀錄
+                  </span>
+                  <span className="text-xs text-blue-200/80 hidden sm:inline">
+                    測驗與模考錯題將即時歸檔
+                  </span>
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold tracking-tight">
+                  目前考生帳號：<span className="text-amber-300 font-mono">{currentUser.email}</span>
+                </h2>
+                <p className="text-xs text-blue-100/80">
+                  專屬錯題本已為您自動彙整 <span className="font-bold text-red-300 text-sm">{wrongCount}</span> 題待複習試題，考前隨時重溫突破弱點。
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+              <button
+                id="home-view-wrong-btn"
+                onClick={() => onNavigateTab('wrong-questions')}
+                className="py-2.5 px-4 rounded-xl text-xs font-bold bg-red-600 hover:bg-red-500 text-white shadow-md flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                <AlertCircle className="w-4 h-4" />
+                <span>複習專屬錯題 ({wrongCount})</span>
+              </button>
+              <button
+                id="home-switch-account-btn"
+                onClick={onOpenLoginModal}
+                className="py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors cursor-pointer"
+              >
+                切換帳號
+              </button>
+              <button
+                id="home-logout-btn"
+                onClick={onLogout}
+                className="py-2.5 px-3 rounded-xl text-xs font-semibold text-blue-200 hover:text-red-300 hover:bg-white/5 transition-colors cursor-pointer"
+                title="登出目前帳號"
+              >
+                登出
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Logged-out Email Login Card */
+        <div className="bg-white rounded-3xl border-2 border-blue-100 p-6 sm:p-8 shadow-md relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-bold border border-blue-200">
+                <Mail className="w-3.5 h-3.5 text-blue-600" />
+                考生專屬信箱登入・啟動測驗錯題自動紀錄
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+                輸入信箱即可登入，讓每一次練習的錯題永久被記錄
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                登入後系統將為您的帳號獨立保存所有答錯題目、複習攻克進度與模考歷史。無須設定繁瑣密碼，支援多位考生隨時切換！
+              </p>
+            </div>
+
+            {/* Email Input Form */}
+            <div className="w-full lg:max-w-md">
+              <form onSubmit={handleHomeLogin} className="space-y-3">
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="relative flex-1">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <input
+                      id="home-email-input"
+                      type="email"
+                      value={homeEmailInput}
+                      onChange={(e) => {
+                        setHomeEmailInput(e.target.value);
+                        if (emailInputError) setEmailInputError('');
+                      }}
+                      placeholder="請輸入電子信箱 (例：candidate@patent.tw)"
+                      className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 text-sm text-slate-900 placeholder:text-slate-400 font-medium transition-all"
+                    />
+                  </div>
+                  <button
+                    id="home-login-submit-btn"
+                    type="submit"
+                    className="py-2.5 px-5 rounded-xl bg-blue-900 hover:bg-blue-800 text-white font-bold text-sm shadow-md active:scale-98 transition-all shrink-0 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    <span>登入 / 啟動記錄</span>
+                  </button>
+                </div>
+
+                {emailInputError && (
+                  <p className="text-xs text-red-600 font-medium flex items-center gap-1">
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    <span>{emailInputError}</span>
+                  </p>
+                )}
+
+                {/* Quick Select from Recent Users */}
+                {recentUsers.length > 0 && (
+                  <div className="flex items-center gap-1.5 flex-wrap text-xs text-slate-500 pt-1">
+                    <span className="text-[11px] text-slate-400">快速切換常用信箱：</span>
+                    {recentUsers.map((rec) => (
+                      <button
+                        key={rec}
+                        type="button"
+                        onClick={() => {
+                          setHomeEmailInput(rec);
+                          setEmailInputError('');
+                        }}
+                        className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-50 hover:text-blue-900 border border-slate-200 text-[11px] text-slate-600 transition-colors"
+                      >
+                        {rec}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* User Quick Learning Dashboard Bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

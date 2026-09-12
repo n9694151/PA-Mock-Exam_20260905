@@ -10,14 +10,20 @@ import { Favorites } from './pages/Favorites';
 import { Statistics } from './pages/Statistics';
 import { RandomQuizModal } from './components/RandomQuizModal';
 import { ImportModal } from './components/ImportModal';
+import { LoginModal } from './components/LoginModal';
 import { questionService } from './services/questionService';
 import { storageService } from './services/storageService';
-import { Question } from './types';
+import { authService } from './services/authService';
+import { Question, UserProfile } from './types';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<NavTab>('home');
   const [randomModalOpen, setRandomModalOpen] = useState(false);
   const [importModalOpen, setImportModalOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+  // User auth state
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(authService.getCurrentUser());
 
   // Active quiz session state
   const [activeQuestions, setActiveQuestions] = useState<Question[]>([]);
@@ -36,7 +42,35 @@ export default function App() {
 
   useEffect(() => {
     updateBadges();
-  }, [currentTab]);
+  }, [currentTab, currentUser]);
+
+  // Listen to auth state changes from other components/storage
+  useEffect(() => {
+    const unsubscribe = authService.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      updateBadges();
+    });
+    return unsubscribe;
+  }, []);
+
+  const handleLogin = (email: string) => {
+    try {
+      const user = authService.login(email);
+      storageService.migrateGuestDataToUser(user.email);
+      setCurrentUser(user);
+      updateBadges();
+    } catch (e) {
+      console.error('Login error', e);
+    }
+  };
+
+  const handleLogout = () => {
+    if (window.confirm('確定要登出目前帳號嗎？登出後將切換為訪客模式。')) {
+      authService.logout();
+      setCurrentUser(null);
+      updateBadges();
+    }
+  };
 
   // Handler: Start practice from Home (Year / Subject)
   const handleStartQuizFromHome = (options: {
@@ -136,6 +170,9 @@ export default function App() {
         wrongCount={wrongCount}
         favoriteCount={favoriteCount}
         onOpenRandomModal={() => setRandomModalOpen(true)}
+        currentUser={currentUser}
+        onOpenLoginModal={() => setLoginModalOpen(true)}
+        onLogout={handleLogout}
       />
 
       {/* Main Container */}
@@ -146,6 +183,10 @@ export default function App() {
             onStartMockExam={(year, subjectId) => handleStartMockExam(year, subjectId, 60)}
             onOpenRandomModal={() => setRandomModalOpen(true)}
             onNavigateTab={(tab) => setCurrentTab(tab)}
+            currentUser={currentUser}
+            onLogin={handleLogin}
+            onLogout={handleLogout}
+            onOpenLoginModal={() => setLoginModalOpen(true)}
           />
         )}
 
@@ -177,7 +218,11 @@ export default function App() {
         )}
 
         {currentTab === 'wrong-questions' && (
-          <WrongQuestions onStartPracticing={handleStartCustomList} />
+          <WrongQuestions
+            onStartPracticing={handleStartCustomList}
+            currentUser={currentUser}
+            onOpenLoginModal={() => setLoginModalOpen(true)}
+          />
         )}
 
         {currentTab === 'favorites' && (
@@ -203,6 +248,14 @@ export default function App() {
         onImportSuccess={(cnt) => {
           updateBadges();
           alert(`🎉 成功匯入 ${cnt} 筆試題資料！您現在可以在歷屆試題與刷題中練習這些新題目。`);
+        }}
+      />
+
+      <LoginModal
+        isOpen={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+        onLoginSuccess={(email) => {
+          handleLogin(email);
         }}
       />
     </div>

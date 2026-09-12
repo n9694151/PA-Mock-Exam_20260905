@@ -11,7 +11,11 @@ import {
   X,
   FileText,
   Sparkles,
+  User,
+  LogIn,
+  LogOut,
 } from 'lucide-react';
+import { UserProfile } from '../types';
 
 export type NavTab =
   | 'home'
@@ -29,6 +33,9 @@ interface NavbarProps {
   wrongCount?: number;
   favoriteCount?: number;
   onOpenRandomModal: () => void;
+  currentUser?: UserProfile | null;
+  onOpenLoginModal?: () => void;
+  onLogout?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -37,6 +44,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   wrongCount = 0,
   favoriteCount = 0,
   onOpenRandomModal,
+  currentUser = null,
+  onOpenLoginModal = () => {},
+  onLogout = () => {},
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -189,8 +199,39 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </nav>
 
-          {/* Quick CTA on desktop */}
-          <div className="hidden sm:flex items-center gap-2">
+          {/* Quick CTA & User Auth on desktop */}
+          <div className="hidden sm:flex items-center gap-2.5">
+            {currentUser ? (
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 rounded-xl p-1 pl-2">
+                <button
+                  id="nav-user-status-btn"
+                  onClick={onOpenLoginModal}
+                  className="flex items-center gap-2 text-xs font-semibold text-slate-800 hover:text-blue-900 transition-colors"
+                  title="點擊切換帳號"
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                  <span className="max-w-[140px] truncate">{currentUser.email}</span>
+                </button>
+                <button
+                  id="nav-logout-btn"
+                  onClick={onLogout}
+                  className="p-1 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                  title="登出目前帳號"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                id="nav-login-btn"
+                onClick={onOpenLoginModal}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-blue-200 bg-blue-50/50 text-blue-900 hover:bg-blue-100/70 transition-colors"
+              >
+                <LogIn className="w-3.5 h-3.5 text-blue-800" />
+                <span>信箱登入</span>
+              </button>
+            )}
+
             <button
               id="nav-quick-start-btn"
               onClick={() => handleNavClick('quiz')}
@@ -312,6 +353,52 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Upload className="w-4 h-4 text-slate-500" />
             題庫匯入
           </button>
+
+          {/* User Auth in Mobile Menu */}
+          <div className="pt-3 mt-2 border-t border-slate-100">
+            {currentUser ? (
+              <div className="p-3 rounded-xl bg-blue-50/70 border border-blue-100 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">登入信箱：</span>
+                  <span className="font-bold text-blue-950 truncate max-w-[180px]">
+                    {currentUser.email}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenLoginModal();
+                    }}
+                    className="py-1.5 px-2 text-xs font-semibold text-blue-900 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 text-center"
+                  >
+                    切換帳號
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onLogout();
+                    }}
+                    className="py-1.5 px-2 text-xs font-semibold text-red-600 bg-white border border-red-200 rounded-lg hover:bg-red-50 text-center"
+                  >
+                    登出帳號
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                id="mobile-nav-login-btn"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenLoginModal();
+                }}
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-blue-900 text-white font-bold text-xs shadow-xs"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>登入信箱以永久保存錯題</span>
+              </button>
+            )}
+          </div>
         </div>
       )}
     </header>

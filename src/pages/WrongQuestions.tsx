@@ -7,17 +7,26 @@ import {
   Play,
   Bookmark,
   ChevronRight,
+  Mail,
+  LogIn,
+  UserCheck,
 } from 'lucide-react';
 import { storageService } from '../services/storageService';
 import { questionService } from '../services/questionService';
-import { Question } from '../types';
+import { Question, UserProfile } from '../types';
 import { CORE_SUBJECTS } from '../data/subjects';
 
 interface WrongQuestionsProps {
   onStartPracticing: (questions: Question[], title: string) => void;
+  currentUser?: UserProfile | null;
+  onOpenLoginModal?: () => void;
 }
 
-export const WrongQuestions: React.FC<WrongQuestionsProps> = ({ onStartPracticing }) => {
+export const WrongQuestions: React.FC<WrongQuestionsProps> = ({
+  onStartPracticing,
+  currentUser = null,
+  onOpenLoginModal = () => {},
+}) => {
   const [selectedSubject, setSelectedSubject] = useState<string>('all');
   const [, setRefreshKey] = useState(0);
 
@@ -60,6 +69,51 @@ export const WrongQuestions: React.FC<WrongQuestionsProps> = ({ onStartPracticin
 
   return (
     <div className="space-y-6 pb-12 animate-in fade-in duration-200">
+      {/* Account Login Status Warning or Badge */}
+      {!currentUser ? (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-start sm:items-center gap-3">
+            <div className="p-2 rounded-xl bg-amber-100 text-amber-800 shrink-0">
+              <Mail className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-amber-900">
+                尚未登入信箱（目前為訪客模式）
+              </h3>
+              <p className="text-xs text-amber-700 mt-0.5">
+                登入信箱即可永久記錄專屬錯題本，換電腦或手機也能無縫接軌複習！
+              </p>
+            </div>
+          </div>
+          <button
+            id="wrong-login-prompt-btn"
+            onClick={onOpenLoginModal}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shrink-0 transition-colors cursor-pointer"
+          >
+            <LogIn className="w-4 h-4" />
+            <span>立即登入信箱</span>
+          </button>
+        </div>
+      ) : (
+        <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-3.5 px-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0" />
+            <span className="text-xs text-slate-600">
+              已登入帳號：<strong className="text-blue-900 font-mono">{currentUser.email}</strong>
+            </span>
+            <span className="text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full hidden sm:inline">
+              專屬錯題自動保存中
+            </span>
+          </div>
+          <button
+            onClick={onOpenLoginModal}
+            className="text-xs text-blue-800 hover:underline font-semibold shrink-0"
+          >
+            切換帳號
+          </button>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
           <div className="flex items-center gap-2">

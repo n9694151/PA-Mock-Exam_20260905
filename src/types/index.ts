@@ -34,11 +34,19 @@ export interface Subject {
   defaultQuestionCount: number;
 }
 
+export interface UserProfile {
+  email: string;
+  createdAt: number;
+  lastLoginAt: number;
+  displayName?: string;
+}
+
 export interface AnswerRecord {
   questionId: string;
   selectedOption: string;
   isCorrect: boolean;
   timestamp: number;
+  userEmail?: string;
 }
 
 export interface WrongQuestionRecord {
@@ -48,6 +56,7 @@ export interface WrongQuestionRecord {
   failedCount: number;
   lastAttemptTime: number;
   solved: boolean;
+  userEmail?: string;
 }
 
 export interface MockExamResult {

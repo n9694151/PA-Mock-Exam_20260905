@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Question } from '../types';
 import { requestGeminiExplanation } from '../services/geminiService';
+import { storageService } from '../services/storageService';
 
 interface QuestionCardProps {
   question: Question;
@@ -291,6 +292,19 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                       </span>
                     )}
                   </div>
+                  {!isCorrect && (
+                    <div className="text-xs font-semibold mt-1">
+                      {storageService.isLoggedIn() ? (
+                        <span className="text-red-700 bg-red-100/80 px-2 py-0.5 rounded-md inline-block">
+                          📌 已自動收錄至 {storageService.getCurrentUserEmail()} 的專屬錯題本
+                        </span>
+                      ) : (
+                        <span className="text-amber-800 bg-amber-100/80 px-2 py-0.5 rounded-md inline-block">
+                          💡 提示：尚未登入信箱，此錯題未保存至個人錯題本
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 
